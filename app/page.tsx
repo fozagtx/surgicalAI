@@ -79,7 +79,7 @@ export default function Home() {
             <div className="flex-1 max-w-md">
               <div className="bg-card rounded-2xl shadow-lg p-3 border border-border">
                 <img
-                  src="/image.png"
+                  src="/after.png"
                   alt="After - Final result prediction"
                   className="w-full rounded-xl aspect-square object-cover"
                 />

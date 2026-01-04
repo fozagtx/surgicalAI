@@ -2,85 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/* ==========================================================================
+   Brand Color Palette
+   ==========================================================================
+   #F5EFED - Cream (background)
+   #D35F5B - Coral (destructive/warning)
+   #D0701E - Amber (accent)
+   #975C3E - Brown (secondary accent)
+   #5C3D2E - Dark Brown (emphasis)
+   #1A504F - Teal (primary)
+   #222421 - Charcoal (foreground)
+   #D3BCAD - Taupe (muted/secondary)
+   ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+/* ==========================================================================
+   Typography System
+   ==========================================================================
+   Primary typeface: Inter (modern rounded sans-serif)
 
-.font-geist {
-  font-family: "Geist", sans-serif;
+   Headlines: font-bold (700), tight line-height (1.1-1.2)
+   Section titles: font-semibold (600)
+   Body text: font-normal (400)
+   Captions/metadata: font-normal to font-medium (400-500), smaller size
+   ========================================================================== */
+
+.font-inter {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-.font-arimo {
-  font-family: "Arimo", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+/* Typography utility classes */
+.text-headline {
+  @apply font-bold leading-tight tracking-tight;
+}
+
+.text-section-title {
+  @apply font-semibold leading-snug;
+}
+
+.text-body {
+  @apply font-normal leading-relaxed;
+}
+
+.text-caption {
+  @apply text-sm font-normal leading-normal text-muted-foreground;
+}
+
+.text-metadata {
+  @apply text-xs font-medium uppercase tracking-wider text-muted-foreground;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    /* Background & Foreground - #F5EFED, #222421 */
+    --background: 15 29% 94%;
+    --foreground: 100 4% 14%;
+
+    /* Card & Popover - slightly lighter cream */
+    --card: 15 25% 96%;
+    --card-foreground: 100 4% 14%;
+    --popover: 15 25% 98%;
+    --popover-foreground: 100 4% 14%;
+
+    /* Primary - Teal #1A504F */
+    --primary: 179 51% 21%;
+    --primary-foreground: 15 29% 96%;
+
+    /* Secondary - Taupe #D3BCAD */
+    --secondary: 24 30% 75%;
+    --secondary-foreground: 100 4% 14%;
+
+    /* Muted - Lighter taupe */
+    --muted: 24 20% 88%;
+    --muted-foreground: 20 15% 40%;
+
+    /* Accent - Amber #D0701E */
+    --accent: 28 75% 47%;
+    --accent-foreground: 15 29% 96%;
+
+    /* Destructive - Coral #D35F5B */
+    --destructive: 2 58% 59%;
+    --destructive-foreground: 15 29% 96%;
+
+    /* Border & Input - warm neutral */
+    --border: 24 20% 85%;
+    --input: 24 20% 85%;
+    --ring: 179 51% 21%;
+
+    /* Chart colors from brand palette */
+    --chart-1: 28 75% 47%;   /* Amber #D0701E */
+    --chart-2: 179 51% 21%;  /* Teal #1A504F */
+    --chart-3: 20 42% 42%;   /* Brown #975C3E */
+    --chart-4: 2 58% 59%;    /* Coral #D35F5B */
+    --chart-5: 20 33% 27%;   /* Dark Brown #5C3D2E */
+
+    /* Brand color utilities */
+    --brand-cream: 15 29% 94%;
+    --brand-coral: 2 58% 59%;
+    --brand-amber: 28 75% 47%;
+    --brand-brown: 20 42% 42%;
+    --brand-dark-brown: 20 33% 27%;
+    --brand-teal: 179 51% 21%;
+    --brand-charcoal: 100 4% 14%;
+    --brand-taupe: 24 30% 75%;
+
+    --radius: 0.625rem;
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Dark mode - inverted with brand colors */
+    --background: 100 4% 10%;
+    --foreground: 15 29% 94%;
+
+    --card: 100 4% 12%;
+    --card-foreground: 15 29% 94%;
+    --popover: 100 4% 12%;
+    --popover-foreground: 15 29% 94%;
+
+    /* Primary - lighter teal for dark mode */
+    --primary: 179 45% 35%;
+    --primary-foreground: 100 4% 10%;
+
+    /* Secondary - darker taupe */
+    --secondary: 24 20% 25%;
+    --secondary-foreground: 15 29% 94%;
+
+    /* Muted */
+    --muted: 24 15% 20%;
+    --muted-foreground: 24 20% 65%;
+
+    /* Accent - brighter amber for dark mode */
+    --accent: 28 80% 55%;
+    --accent-foreground: 100 4% 10%;
+
+    /* Destructive - adjusted coral */
+    --destructive: 2 65% 50%;
+    --destructive-foreground: 15 29% 96%;
+
+    --border: 24 15% 20%;
+    --input: 24 15% 20%;
+    --ring: 179 45% 35%;
+
+    /* Chart colors for dark mode */
+    --chart-1: 28 80% 55%;
+    --chart-2: 179 45% 40%;
+    --chart-3: 20 45% 50%;
+    --chart-4: 2 65% 55%;
+    --chart-5: 24 35% 45%;
   }
 }
 

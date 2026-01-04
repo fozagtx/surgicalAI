@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Sparkles, Loader2, ArrowLeft } from "lucide-react";
-import BeforeAfterSlider from "./BeforeAfterSlider";
+import { Upload, Sparkles, Loader2, ArrowLeft, Download } from "lucide-react";
+import ProgressionGrid from "./ProgressionGrid";
 
 const SAMPLE_IMAGES = [
   "/files_1487381-1767543391582-image.png",
@@ -95,10 +95,10 @@ export default function ImageUploader() {
         {generatedImage ? (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline-md text-foreground mb-2">Your Results</h2>
-              <p className="text-muted-foreground">Drag the slider to compare before and after</p>
+              <h2 className="text-headline-md text-foreground mb-2">Your Complete Journey Timeline</h2>
+              <p className="text-muted-foreground">See your transformation unfold month by month</p>
             </div>
-            <BeforeAfterSlider beforeImage={selectedImage!} afterImage={generatedImage} />
+            <ProgressionGrid beforeImage={selectedImage!} generatedImage={generatedImage} />
             <div className="flex justify-center gap-4">
               <Button onClick={reset} variant="outline" size="lg">
                 Try Another Photo
@@ -113,7 +113,8 @@ export default function ImageUploader() {
                 className="bg-primary hover:bg-primary/90"
                 size="lg"
               >
-                Download Result
+                <Download className="mr-2 h-4 w-4" />
+                Download Final Result
               </Button>
             </div>
           </div>

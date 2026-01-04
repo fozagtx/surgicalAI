@@ -101,7 +101,7 @@ export default function Home() {
           </p>
           <div className="bg-card rounded-2xl shadow-lg p-4 border border-border">
             <img
-              src="/image.png"
+              src="/after.png"
               alt="Hair transplant progression timeline showing 12 months of growth stages"
               className="w-full rounded-lg"
             />

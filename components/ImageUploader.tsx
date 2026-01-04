@@ -1,0 +1,221 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Upload, Sparkles, Loader2, ArrowLeft } from "lucide-react";
+import BeforeAfterSlider from "./BeforeAfterSlider";
+
+const SAMPLE_IMAGES = [
+  "/files_1487381-1767543391582-image.png",
+  "/files_1487381-1767543309955-image.png",
+  "/files_1487381-1767543237558-image.png",
+];
+
+export default function ImageUploader() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+        setGeneratedImage(null);
+        setError(null);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSampleSelect = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setGeneratedImage(null);
+    setError(null);
+  };
+
+  const generateResult = async () => {
+    if (!selectedImage) return;
+
+    setIsGenerating(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          imageUrl: selectedImage,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate image");
+      }
+
+      const data = await response.json();
+      setGeneratedImage(data.imageUrl);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const reset = () => {
+    setSelectedImage(null);
+    setGeneratedImage(null);
+    setError(null);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-2">
+              <Sparkles className="h-8 w-8 text-teal-600" />
+              <span className="text-2xl font-bold text-slate-800 font-geist tracking-tight">SurgicalAI</span>
+            </div>
+            <Button onClick={() => window.location.reload()} variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {generatedImage ? (
+          <div className="space-y-8">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-slate-900 mb-2 font-geist tracking-tight">Your Results</h2>
+              <p className="text-slate-600">Drag the slider to compare before and after</p>
+            </div>
+            <BeforeAfterSlider beforeImage={selectedImage!} afterImage={generatedImage} />
+            <div className="flex justify-center gap-4">
+              <Button onClick={reset} variant="outline" size="lg">
+                Try Another Photo
+              </Button>
+              <Button
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = generatedImage;
+                  link.download = "hair-transplant-result.jpg";
+                  link.click();
+                }}
+                className="bg-teal-600 hover:bg-teal-700"
+                size="lg"
+              >
+                Download Result
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-slate-900 mb-2 font-geist tracking-tight">Upload Your Photo</h2>
+              <p className="text-slate-600">
+                Choose a photo or upload your own to see your potential results
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card>
+                <CardContent className="pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Upload Your Photo</h3>
+                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      <Upload className="h-12 w-12 mx-auto mb-4 text-slate-400" />
+                      <p className="text-slate-600 mb-2">Click to upload or drag and drop</p>
+                      <p className="text-sm text-slate-500">PNG, JPG up to 10MB</p>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Or Try a Sample</h3>
+                  <div className="grid grid-cols-3 gap-4">
+                    {SAMPLE_IMAGES.map((imageUrl, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSampleSelect(imageUrl)}
+                        className={`rounded-lg overflow-hidden border-2 transition-all ${
+                          selectedImage === imageUrl
+                            ? "border-teal-600 ring-2 ring-teal-200"
+                            : "border-slate-200 hover:border-teal-400"
+                        }`}
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`Sample ${index + 1}`}
+                          className="w-full h-24 object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {selectedImage && (
+              <Card>
+                <CardContent className="pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Preview</h3>
+                  <div className="flex flex-col items-center gap-4">
+                    <img
+                      src={selectedImage}
+                      alt="Selected"
+                      className="max-w-md w-full rounded-lg shadow-lg"
+                    />
+                    <Button
+                      onClick={generateResult}
+                      disabled={isGenerating}
+                      size="lg"
+                      className="bg-teal-600 hover:bg-teal-700"
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Generating Result...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-5 w-5" />
+                          Generate Hair Transplant Result
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {error && (
+              <Card className="border-red-200 bg-red-50">
+                <CardContent className="pt-6">
+                  <p className="text-red-600 text-center">{error}</p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

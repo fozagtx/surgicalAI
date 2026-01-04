@@ -8,8 +8,6 @@ import ProgressionGrid from "./ProgressionGrid";
 
 const SAMPLE_IMAGES = [
   "/files_1487381-1767543391582-image.png",
-  "/files_1487381-1767543309955-image.png",
-  "/files_1487381-1767543237558-image.png",
 ];
 
 export default function ImageUploader() {

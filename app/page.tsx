@@ -99,11 +99,11 @@ export default function Home() {
           <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
             See your transformation unfold month by month, from grafting day to final results
           </p>
-          <div className="bg-card rounded-2xl shadow-lg p-4 border border-border">
+          <div className="bg-card rounded-2xl shadow-lg p-4 border border-border max-w-4xl mx-auto">
             <img
               src="/after.png"
               alt="Hair transplant progression timeline showing 12 months of growth stages"
-              className="w-full rounded-lg"
+              className="w-full h-auto object-contain rounded-lg"
             />
           </div>
         </div>

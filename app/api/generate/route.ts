@@ -22,21 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const prompt = `Create a professional hair transplant progression timeline grid showing 8 stages of hair restoration for this person. Layout: 2 rows x 4 columns on dark background.
-
-Row 1 (left to right):
-1. "Before (Current)" - Original bald/balding state
-2. "Grafting (Day 0)" - Post-surgery with visible grafts
-3. "Month 1 (Shedding Phase)" - Initial shedding period
-4. "Month 3 (Early Growth)" - Early hair growth beginning
-
-Row 2 (left to right):
-5. "Month 5 (Noticeable Growth)" - Visible hair growth
-6. "Month 8 (Significant Density)" - Fuller coverage
-7. "Month 10 (Nearing Final Result)" - Near-complete result
-8. "Month 12 (Final Result)" - Full natural hairline with dense coverage
-
-Each image should show the same person's face consistently. Include white text labels below each image. Make it photorealistic, high quality, professional medical visualization style with dark/black background.`;
+    const prompt = "Transform this person to show a successful hair transplant result with a full, natural-looking hairline and dense hair coverage. The person should have a healthy, youthful appearance with restored hair that matches their facial features and age. Make it photorealistic, high quality, with natural lighting.";
 
     let imageBlob: Blob;
 

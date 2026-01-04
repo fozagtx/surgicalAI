@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     const chunkSize = 8192;
     for (let i = 0; i < uint8Array.length; i += chunkSize) {
       const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
-      binaryString += String.fromCharCode(...chunk);
+      binaryString += String.fromCharCode.apply(null, Array.from(chunk));
     }
     const base64 = btoa(binaryString);
     const generatedImageUrl = `data:${resultBlob.type};base64,${base64}`;

@@ -7,7 +7,7 @@ import { Upload, Sparkles, Loader2, ArrowLeft, Download } from "lucide-react";
 import ProgressionGrid from "./ProgressionGrid";
 
 const SAMPLE_IMAGES = [
-  "/files_1487381-1767543391582-image.png",
+  "/before.png",
 ];
 
 export default function ImageUploader() {

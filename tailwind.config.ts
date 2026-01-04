@@ -9,10 +9,32 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+      },
+      fontSize: {
+        // Headlines - bold, high contrast, tight line height
+        'headline-xl': ['3.5rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.02em' }],
+        'headline-lg': ['2.5rem', { lineHeight: '1.15', fontWeight: '700', letterSpacing: '-0.02em' }],
+        'headline-md': ['2rem', { lineHeight: '1.2', fontWeight: '700', letterSpacing: '-0.01em' }],
+        'headline-sm': ['1.5rem', { lineHeight: '1.25', fontWeight: '700', letterSpacing: '-0.01em' }],
+        // Section titles - semibold
+        'section-lg': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'section-md': ['1.125rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'section-sm': ['1rem', { lineHeight: '1.4', fontWeight: '600' }],
+        // Body text - regular
+        'body-lg': ['1.125rem', { lineHeight: '1.6', fontWeight: '400' }],
+        'body-md': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
+        'body-sm': ['0.875rem', { lineHeight: '1.6', fontWeight: '400' }],
+        // Captions & metadata - regular to medium, smaller
+        'caption': ['0.875rem', { lineHeight: '1.4', fontWeight: '400' }],
+        'metadata': ['0.75rem', { lineHeight: '1.4', fontWeight: '500', letterSpacing: '0.025em' }],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-brand': 'linear-gradient(135deg, hsl(var(--brand-teal)) 0%, hsl(var(--brand-amber)) 100%)',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -60,23 +82,26 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        // Brand color utilities
+        brand: {
+          cream: 'hsl(var(--brand-cream))',
+          coral: 'hsl(var(--brand-coral))',
+          amber: 'hsl(var(--brand-amber))',
+          brown: 'hsl(var(--brand-brown))',
+          'dark-brown': 'hsl(var(--brand-dark-brown))',
+          teal: 'hsl(var(--brand-teal))',
+          charcoal: 'hsl(var(--brand-charcoal))',
+          taupe: 'hsl(var(--brand-taupe))',
+        },
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       animation: {

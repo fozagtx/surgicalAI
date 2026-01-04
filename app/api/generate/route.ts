@@ -89,9 +89,15 @@ export async function POST(request: NextRequest) {
     const resultBlob = await response.blob();
     const arrayBuffer = await resultBlob.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
-    const base64 = btoa(
-      String.fromCharCode.apply(null, Array.from(uint8Array))
-    );
+
+    // Convert to base64 in chunks to avoid stack overflow
+    let binaryString = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
+      binaryString += String.fromCharCode(...chunk);
+    }
+    const base64 = btoa(binaryString);
     const generatedImageUrl = `data:${resultBlob.type};base64,${base64}`;
 
     return NextResponse.json({

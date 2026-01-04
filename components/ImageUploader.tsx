@@ -75,13 +75,13 @@ export default function ImageUploader() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+    <div className="min-h-screen bg-background">
+      <nav className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-8 w-8 text-teal-600" />
-              <span className="text-2xl font-bold text-slate-800 font-geist tracking-tight">SurgicalAI</span>
+              <Sparkles className="h-8 w-8 text-primary" />
+              <span className="text-2xl font-bold text-foreground tracking-tight">SurgicalAI</span>
             </div>
             <Button onClick={() => window.location.reload()} variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -95,8 +95,8 @@ export default function ImageUploader() {
         {generatedImage ? (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-900 mb-2 font-geist tracking-tight">Your Results</h2>
-              <p className="text-slate-600">Drag the slider to compare before and after</p>
+              <h2 className="text-headline-md text-foreground mb-2">Your Results</h2>
+              <p className="text-muted-foreground">Drag the slider to compare before and after</p>
             </div>
             <BeforeAfterSlider beforeImage={selectedImage!} afterImage={generatedImage} />
             <div className="flex justify-center gap-4">
@@ -110,7 +110,7 @@ export default function ImageUploader() {
                   link.download = "hair-transplant-result.jpg";
                   link.click();
                 }}
-                className="bg-teal-600 hover:bg-teal-700"
+                className="bg-primary hover:bg-primary/90"
                 size="lg"
               >
                 Download Result
@@ -120,8 +120,8 @@ export default function ImageUploader() {
         ) : (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-900 mb-2 font-geist tracking-tight">Upload Your Photo</h2>
-              <p className="text-slate-600">
+              <h2 className="text-headline-md text-foreground mb-2">Upload Your Photo</h2>
+              <p className="text-muted-foreground">
                 Choose a photo or upload your own to see your potential results
               </p>
             </div>
@@ -129,27 +129,74 @@ export default function ImageUploader() {
             <div className="grid md:grid-cols-2 gap-8">
               <Card>
                 <CardContent className="pt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Upload Your Photo</h3>
-                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      id="file-upload"
-                    />
-                    <label htmlFor="file-upload" className="cursor-pointer">
-                      <Upload className="h-12 w-12 mx-auto mb-4 text-slate-400" />
-                      <p className="text-slate-600 mb-2">Click to upload or drag and drop</p>
-                      <p className="text-sm text-slate-500">PNG, JPG up to 10MB</p>
-                    </label>
-                  </div>
+                  <h3 className="text-section-md text-foreground mb-4">
+                    {selectedImage ? "Selected Photo" : "Upload Your Photo"}
+                  </h3>
+                  {selectedImage ? (
+                    <div className="space-y-4">
+                      <div className="relative rounded-lg overflow-hidden">
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="w-full aspect-[4/3] object-cover rounded-lg"
+                        />
+                        <label
+                          htmlFor="file-upload"
+                          className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-colors cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100"
+                        >
+                          <span className="text-white font-medium bg-black/50 px-4 py-2 rounded-lg">
+                            Change Photo
+                          </span>
+                        </label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileUpload}
+                          className="hidden"
+                          id="file-upload"
+                        />
+                      </div>
+                      <Button
+                        onClick={generateResult}
+                        disabled={isGenerating}
+                        size="lg"
+                        className="w-full"
+                      >
+                        {isGenerating ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            Generating Result...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="mr-2 h-5 w-5" />
+                            Generate Result
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors aspect-[4/3] flex flex-col items-center justify-center">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                        id="file-upload"
+                      />
+                      <label htmlFor="file-upload" className="cursor-pointer">
+                        <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                        <p className="text-muted-foreground mb-2">Click to upload or drag and drop</p>
+                        <p className="text-sm text-muted-foreground/70">PNG, JPG up to 10MB</p>
+                      </label>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
               <Card>
                 <CardContent className="pt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Or Try a Sample</h3>
+                  <h3 className="text-section-md text-foreground mb-4">Or Try a Sample</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {SAMPLE_IMAGES.map((imageUrl, index) => (
                       <button
@@ -157,8 +204,8 @@ export default function ImageUploader() {
                         onClick={() => handleSampleSelect(imageUrl)}
                         className={`rounded-lg overflow-hidden border-2 transition-all ${
                           selectedImage === imageUrl
-                            ? "border-teal-600 ring-2 ring-teal-200"
-                            : "border-slate-200 hover:border-teal-400"
+                            ? "border-primary ring-2 ring-primary/20"
+                            : "border-border hover:border-primary"
                         }`}
                       >
                         <img
@@ -173,43 +220,10 @@ export default function ImageUploader() {
               </Card>
             </div>
 
-            {selectedImage && (
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-slate-800">Preview</h3>
-                  <div className="flex flex-col items-center gap-4">
-                    <img
-                      src={selectedImage}
-                      alt="Selected"
-                      className="max-w-md w-full rounded-lg shadow-lg"
-                    />
-                    <Button
-                      onClick={generateResult}
-                      disabled={isGenerating}
-                      size="lg"
-                      className="bg-teal-600 hover:bg-teal-700"
-                    >
-                      {isGenerating ? (
-                        <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Generating Result...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="mr-2 h-5 w-5" />
-                          Generate Hair Transplant Result
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
             {error && (
-              <Card className="border-red-200 bg-red-50">
+              <Card className="border-destructive/50 bg-destructive/10">
                 <CardContent className="pt-6">
-                  <p className="text-red-600 text-center">{error}</p>
+                  <p className="text-destructive text-center">{error}</p>
                 </CardContent>
               </Card>
             )}

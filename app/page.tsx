@@ -61,7 +61,7 @@ export default function Home() {
             <div className="flex-1 max-w-md">
               <div className="bg-card rounded-2xl shadow-lg p-3 border border-border">
                 <img
-                  src="/before-comparison.png"
+                  src="/files_1487381-1767543237558-image.png"
                   alt="Before - Current hair condition"
                   className="w-full rounded-xl aspect-square object-cover"
                 />
@@ -79,7 +79,7 @@ export default function Home() {
             <div className="flex-1 max-w-md">
               <div className="bg-card rounded-2xl shadow-lg p-3 border border-border">
                 <img
-                  src="/after-comparison.png"
+                  src="/files_1487381-1767543309955-image.png"
                   alt="After - Final result prediction"
                   className="w-full rounded-xl aspect-square object-cover"
                 />
